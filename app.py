@@ -274,6 +274,27 @@ class BitcoinL2RAG:
         # Add additional CSS for sidebar chat history and professional header
         st.markdown("""
         <style>
+        /* Make expanders more noticeable */
+        .streamlit-expanderHeader {
+            background-color: #F7931A15 !important;
+            border-left: 3px solid #F7931A !important;
+            padding: 10px !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .streamlit-expanderHeader:hover {
+            background-color: #F7931A25 !important;
+        }
+        
+        .thinking-process-container {
+            padding: 15px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            border-left: 3px solid #F7931A;
+        }
+        
         /* Bitcoin-themed professional header styling */
         .app-header {
             background: linear-gradient(135deg, #F7931A 0%, #FFD700 50%, #F7931A 100%);
@@ -295,7 +316,6 @@ class BitcoinL2RAG:
             max-width: 90%;
         }
         
-        /* Top darker bar */
         .app-header::before {
             content: "";
             position: absolute;
@@ -345,7 +365,6 @@ class BitcoinL2RAG:
             text-shadow: 0px 1px 1px rgba(255,255,255,0.2);
         }
         
-        /* Query header styling */
         .query-header {
             background: rgba(255, 255, 255, 0.05);
             border-left: 4px solid var(--primary);
@@ -359,12 +378,10 @@ class BitcoinL2RAG:
             font-weight: 500;
         }
         
-        /* Input container styling */
         .input-container {
             margin-bottom: 1.5rem;
         }
         
-        /* Style the input field to look more professional */
         .stTextInput > div > div > input {
             border: 2px solid var(--primary);
             border-radius: var(--border-radius);
@@ -383,7 +400,6 @@ class BitcoinL2RAG:
             outline: none;
         }
         
-        /* Enhanced input label styling */
         .stTextInput label {
             font-weight: 600;
             color: var(--primary);
@@ -399,7 +415,6 @@ class BitcoinL2RAG:
             display: inline-block;
         }
         
-        /* Sidebar chat history styling for buttons */
         section[data-testid="stSidebar"] button.history-btn {
             background: rgba(255, 255, 255, 0.1);
             padding: 8px 10px;
@@ -423,7 +438,6 @@ class BitcoinL2RAG:
             transform: translateX(2px);
         }
         
-        /* Bitcoin pattern background */
         .bitcoin-pattern {
             position: absolute;
             top: 0;
@@ -436,7 +450,6 @@ class BitcoinL2RAG:
             z-index: 0;
         }
         
-        /* Shine effect */
         .shine-effect {
             position: absolute;
             top: 0;
@@ -528,8 +541,9 @@ class BitcoinL2RAG:
                     # Only show thinking process for previous responses (not the latest one)
                     # Latest one will be shown separately below the chat history
                     thinking_key = f"thinking_{message_index}"
-                    if not is_latest_response and thinking_key in st.session_state and st.session_state[thinking_key]:
-                        with st.expander("🧠 Reasoning", expanded=False):
+                    # Show the thinking expander even if thinking content is empty
+                    with st.expander("🧠 View AI Reasoning Process", expanded=False):
+                        if thinking_key in st.session_state and st.session_state[thinking_key]:
                             st.markdown(f"""
                             <div class="thinking-process-container">
                                 <div class="thinking-box">
@@ -537,6 +551,8 @@ class BitcoinL2RAG:
                                 </div>
                             </div>
                             """, unsafe_allow_html=True)
+                        else:
+                            st.info("No detailed reasoning available for this response.")
                     
                     # AI message
                     processed_content = self.text_processor.process_markdown(ai_content)
@@ -579,8 +595,8 @@ class BitcoinL2RAG:
             data = st.session_state.response_data
             
             # ALWAYS show thinking process for the current response
-            if data['thinking']:
-                with st.expander("🧠 Reasoning", expanded=False):
+            with st.expander("🧠 View AI Reasoning Process", expanded=False):
+                if data['thinking']:
                     st.markdown(f"""
                     <div class="thinking-process-container">
                         <div class="thinking-box">
@@ -588,6 +604,8 @@ class BitcoinL2RAG:
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
+                else:
+                    st.info("No detailed reasoning available for this response.")
             
             # Display citations directly without the container box
             self.ui.display_citations(data)
