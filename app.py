@@ -627,7 +627,7 @@ class BitcoinL2RAG:
             margin-bottom: 10px;
         }
         .question-label {
-            font-size: 1.3rem;
+            font-size: 2rem;
             font-weight: 600;
             color: var(--primary);
             display: flex;
