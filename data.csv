@@ -1,0 +1,418 @@
+,"Canonical Research on Bitcoin Scalability Solutions from Gen 1 to Gen 4
+Maintained by: @pccayaan Pumpkeen Latte, Chief Scientist at Tachi",,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,REVISION: v0.0.5 - 24.05.2025,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,"GEN 4
+(Metaprotocols, Proof Aggregators, Statechains, Privacy Enhancers)",,,,"GEN 3
+(Rollups / Zones)",,,,,"GEN 2
+(Sidechains / L2 Blockchains)",,,,"GEN 1
+(Payment Channels)"
+,"Tachi
+(https://tachibtc.com/)","Payjoin
+(https://payjoin.org/)","Ark 
+(https://arklabs.to/)","Erk 
+(https://docs.second.tech/protocol/intro/)",Babylon,Merlin,"Bitlayer
+(https://www.bitlayer.org/)","BitcoinOS
+(https://www.bitcoinos.build/)",CoreDAO,"Arch 
+(https://www.arch.network/)",Stacks,Rootstock,"Liquid
+(https://liquid.net/)","Lightning
+(https://lightning.network/)"
+"Use cases
+What can I use it for?","P2P Payments
+
+Agentic Payments
+
+Stablecoins
+
+RWA: BRC-20 Tokens, Bonds
+
+DeFi: Lending, and DEX
+
+SocFi: Nostr CDN & Zaps
+
+Institutional Compliant Asset Movement (like Liquid for Exchanges)
+
+Insurance & Vaults for theft prevention and remedies",Private P2P Payments,Secure & Instant P2P Payments,Secure & Instant P2P Payments,"Staking
+
+Restaking
+
+Cross-chain security
+
+Decentralized Timestamping","DeFi:
+
+BRC-20 
+
+Ordinals
+
+Bridge BTC to other ecos","BRC-20 issuance
+
+NFTs
+
+Cross-chain bridging
+
+DeFi: DEX, lending
+
+Use EVM dApps",Rollups on Bitcoin for Smart Contracts,"Yield Farming
+
+DEX
+
+Lending & Borrowing
+
+Bridge BTC via CORE to other chains
+
+NFT
+
+Gaming","Payments
+
+DeFi: DEX, AMM, LPs
+
+Stablecoins","DeFi apps
+
+Gaming apps
+
+NFT marketplaces
+
+Social Media apps
+
+Web3 Identity solution (Bitcoin Naming Service)","Staking through locking BTC and creating RSK
+
+Use BTC as collateral for various DeFi applications
+
+Create NFTs","Exchange-to-Exchange transfers
+
+Confidential P2P tranasctions
+
+Asset Issuance & Trading
+
+Lend BTC to DeFi apps","Peer to Peer Payments
+
+Online subscriptions"
+"Onboarding Liquidity
+How do I lock or transfer liquidity?","Funds from your wallet is locked in a 2-of-2 Multisig with an absolute timelock. 1 key governed by you. Another key is an Aggregated key governed by 100 nodes who randomly revolve among 300 other nodes, with a quorum of 51 keys need at the time of unlock. Each of the node involved is a Bitcoin Full Node.
+
+No reliance on a single server or a counterparty, nor a reliance on ""few"" fiduciaries. Truly random. Unidirectional exit. Bitcoin Full Nodes only i.e., Bitcoin-native.","Sender and receiver can update an existing transaction with their inputs before sending it to mempool using the P2EP (Pay to End Point) address.
+
+The only issue here is that both sender and receiver must be online.","Users lock their funds into a Server with an arbitrary timelock value. Although the Ark Server is advertised as not centralised, more is to be learnt about how safe and secure the funds are from the third parties involved in the lock.
+
+Users have the provision to exit either unilaterally based on timelock expiration or collaboratively with the Ark Server.","Users lock their Sats with ASP (Ark Service Provider) with a timelock. Expiry can be renewed by swapping it with a new VTXO. Funds are locked in a N-of-N multisig where EACH client is requested to sign before ASP can spend the funds. This means, each client has a veto power.
+
+Users can off-board their liquidity either unilaterally through the client creating an on-chain footprint or co-operatively through an ASP creating smaller on-chain footprint, after exchanging hands with parties on the L2.",,,"Funds in a BTC Wallet need to be locked on the Bitcoin Mainnet through a Bitlayer Bridge.
+
+Once locked, a 1:1 pegged BTC is issued on the Bitlayer rollup.
+
+The Bridge is implemented using BitVM and introduces a lot of trust assumptions.","Users need to deposit their Sats through a Grail bridge into a Taproot asset address which uses a Musig2 scheme tying down all network operators, instead of using scriptless Threshold signatures before locking these user assets.
+
+The rationale behind this design decision is a trust assumption on the honest behavior of node operators. This is opposite to the goals of trustless web vision of Cypherpunks.
+
+Additionally, assets deposited into the bridge is locked and minted on the other side. Which means, the assets are not as native and could risk with disparity between Mints and Burns of Sats.
+
+Finally, BitcoinOS explicitly states in the Whitepaper that Unilateral withdrawal will NOT be supported.",,"Sats are locked in an ""advanced"" cryptographic Multisig using FROST + ROAST.
+
+FROST is essentially a round-robin of signature generation to prevent lockups. But not based on Musig, hence not native.
+
+So, Arch's ROAST, a better derivative of FORST - is a 51% quorum on the Multisig, but still not based on Musig. So, not as native. Also, they don't guarantee unilateral exits - they just claim to reduce the overall risks from lockups.",,,"Deposit BTC into a multisig maintined by the Liquid Federation.
+
+Your BTC is locked on chain to mint a 1:1 pegged L-BTC asset on the Liquid Sidechain.
+
+This introduces a lot of trust assumptions on the federation entities (only 15).","Create a 2-of-2 Multisig address with timelocks and unliateral exit for both peers.
+
+Deposit BTC into this new address to spend your BTC offchain.
+
+While there are minimal trust assumptions (counterparty delinquency to close the channel on time), there is no trust assumption on a 3rd party."
+"Wallet compatiblity
+Can I continue to use my existing wallet after onboarding liquidity?","Any wallet supporting Tapscripts on Bitcoin shall be used to onboard as well as interact with others on Tachi.
+
+No need for multiple wallets, as everything in Tachi is Sat-denominated. Truly Bitcoin-native.","Only few wallets like BTC Pay Server, Bull Bitcoin and Wasabi support Payjoin at the moment and some integrations are not neccessarily available across both Bitcoin as well as Lightning.","Ark uses P2TR addresses (Tapscripts) so any Wallet supporting Taproot should be good to go. While the output script is a P2TR, Ark's own addresses are not Bitcoin native. 
+
+However, currently only Ark CLI is supported.","Currently, Erk helps you create a wallet on their bark CLI and there is no known source to confirm whether they intend to support regular bitcoin wallets.",,,"No. 
+
+Special Wallet compatible with BitVM implementation must be used, such as the Unisat wallet.
+
+Additionally, Bitlayer also supports EVM wallets such as MetaMask, OKX Wallet, and Bitget.
+
+Options to interact with Bitlayer are limited, forcing you to setup a new wallet.","While depositing assets to the bridge is made possible with any Taproot supporting Wallet, further use of the assets on BitcoinOS may require other wallets since the assets are no longer native. 
+
+For example, an EVM Rollup on BitcoinOS would need the user to manage another wallet in addition to the Bitcoin wallet to experience the functionalities in the Rollup.",,"Users can use any Bitcoin wallets that support Taproot Assets.
+
+This ensures that users are not pushed away from their habitual access point to their Sats, which is good - obviously.
+
+However, they also mention ""Optimized UTXOs with a Special Accounts model"". This does not bode well with most of the Bitcoin Native apps that can only implement UTXO - as - UTXO.",,,"Blockstream Green: A popular non-custodial wallet that supports peg-in and peg-out operations, as well as sending and receiving L-BTC and other Liquid assets. It offers a user-friendly interface and multi-signature security. 
+
+Liquid Desktop Wallet: Developed by Blockstream, this wallet provides full Liquid sidechain functionality, including peg-in/out and confidential asset transfers. 
+
+Sparrow Wallet: A Bitcoin wallet that also supports Liquid, allowing users to manage L-BTC and peg funds from Bitcoin mainnet. 
+
+BlueWallet: Offers Liquid support with peg-in/out features and Liquid asset management alongside Bitcoin.","YES. You can use the same wallet.
+
+Muun Wallet (non-custodial, supports both on-chain and Lightning) 
+
+Breez Wallet (non-custodial, mobile Lightning node) 
+
+Zap Wallet (non-custodial, desktop and mobile) 
+
+Electrum (advanced, non-custodial)"
+"Offchain Consensus
+How is my off-chain spend settled so quickly?","Every VTXO spent via Tachi is accompanied by a Shadow Proof (new ZKP based on Hash Accumulation, used in Utreexo).
+
+Bitcoin Full nodes (running the Tachi metaprotocol client alongside) validate the spend based on the same ruleset as that of the Bitcoin Protocol, and adds it to the Round(where other valid transactions accompanied by their respective shadow proofs are also aggregated into a Recursive Inclusion Proof) almost immediately.
+
+There is no need for dispute window since the rulesets are directly implemented from the Bitcoin Full Node running the latest Bitcoin Client. So, it is as final as being canonically final on Bitcoin Mainnet.","Similar to Lightning's Payment Channels, off-chain transactions are based on Mutual Agreement with no commitments and no 3rd Party would be involved in between the sender and the receiver.","First things first - In the case of Ark, VTXO is not a mirroed/indexed version of the UTXO on the Bitcoin Mainnet. It is similar to Erk's interpretation of VTXO which is also a node in the VTXO tree representing a share of the user's Sats in a shared UTXO on the Bitcoin Mainnet with a Taproot output redeemable by respective users sharing the output.
+
+Similar to Erk, Ark has a Server which leads the round, batches transactions, proposed the new state in the form of a VTXO tree that is verified and agreed by other nodes.","First things first - In the case of Erk, VTXO is not a mirroed/indexed version of the UTXO on the Bitcoin Mainnet, but a share of their Sats in the single UTXO committed to the Bitcoin Mainnet at the end of the round, which is different from Tachi's definition of a VTXO (actual user's UTXO offchain, and not shared with anyone else).
+
+Exchange of hands are handled by the ASP by transferring VTXO from one user to another in a tree structure, and the taproot output (shared UTXO) is ready to be committed on chain paying the fees of a single transfer, while the tree entails multiple transfers and keeps track of who own how many Sats. As such, VTXO, Virtual Transaction Output is essentially a node in the transaction tree with presigned transaction confirming access to the funds of the receiver that can be claimed on-chain.
+
+While this is a neat application of Merkle trees, the degree of (de)cenrtalisation of the ASP is still unknown.",,,"As a Rollup, a sequencer is involved to order and batch the transactions into a block, supported by BitVM's proof system almost immediately.
+
+There is a window of 7 days to raise disputes.
+
+If there are no disputes, the state root is published on the Bitcoin mainnet.
+
+While immediate finality is great(borrowed from ETH2), reliance on the sequencer is not a good idea. Additionally, some users may require state root to be published on the Mainnet much earlier than 7 days(!!)","BitSNARK is a 3 operation based enhancement to the BitVM proposal that facilitates the proof genration and veriication using zkSNARKs.
+
+Contracts on each Rollup commits proof and supporting data to Bitcoin through this mechanism.
+
+Although SNARKs are non-interactive Zero Knowledge Proofs, they still rely on a Trusted Setup, which impedes large TVL accumulation and creates trust deficit among all parties about the integrity of the network.
+
+While BitcoinOS has taken a few steps in detailing the node setup, this is still inadequate since the fundamental design remains unchanged.",,"Arch networks claims to achieve sub-second responsiveness through pre-confirmations. This is obviously a sidechain game with a new face on called DAGs (old tech).
+
+Sec 4.1 of the Whitepaper confirms that Arch Network will maintain its own blockchain.
+
+Additionally, Section 5.6 further complicates itself by offering ""soft-confirmation"", yet, remain open to state rollbacks based on Bitcoin state changes actively indexed from the mempool.
+
+Their whole justification for using a DAG in their own blockchain - is that they rely on the state of another Blockchain - the Bitcoin Blockchain. This means, an invalid state can be easily updated without rolling back their entire sidechain.",,,"Blocktime of 1min.
+
+Confirmation time of 2mins.
+
+State maintained in its own Blockchain(sidechain) with each block encapsulating latest transactions. 
+
+Blocks are signed and validated by Federated Notes with a ""strong consensus"".
+
+Very subpar numbers compared to the current demands.","Each off chain spend by the user requires to be authorized by the user in the form of a signature. 
+
+Upon spending, the balance distribution is updated in the channel.
+
+Transactions are not broadcasted.
+
+Cross-channel payments with counter-parties occur through HTLCs."
+"Trust Operators
+Who are these people verifying my off-chain spends?","Only Bitcoin Full Nodes are allowed to participate in the operation of Tachi Metaprotcol.
+
+This not only elevate's the security, but also contributes back to Bitcoin's own network security.","Unlike Lightning, the Payjoin is a direct P2P protocol and does not require 3rd party operators to facilitate bilateral transactions.","However, the degree of decentralisation of the Ark Server is still unknown. It is assumed that only a single Ark server exists.","ASP is a central party, as published on their Protocol Website.",,,"Provers are enabled with BitVM and ZKP to validate the transactions.
+
+As an optimistic rollup, anyone can act as a challenger during the dispute window.
+
+Bridge nodes rely on Full nodes for pegs and de-pegs of BTC but not all may host a Full Node by the side, since they are a blockchain of their own.","Nodes operators need to register as agents on the Bridge contract with stake and an exit secret.
+
+Upon registering, nodes will be included in the Musig2 scriptless k-of-k multisig to lock user assets and mint them synthetically on a rollup.",,"Validators who verify transactions are governed by a stake-weighted dPoS mechanism. If the validation of a transaction can be censored, this is not Bitcoin native.",,,"A closed set of 15 entities as part of the ""federation"" run the sidechain. They are called functionaries, running both bitcoin full nodes and sidechain client.
+
+Trust assumptions on just 15 parties to manage such a huge TVL is a big no-no in the eyes of Satoshi.","Routing Nodes, sometimes hosted alongside Bitcoin Full Nodes.
+
+Low probability of censorship events."
+"Onchain Reconciliation
+How is my off-chain spend reflected back on Bitcoin Mainnet?","51% or more number of Bitcoin Full Nodes who were involved in the leasing of your funds on the Bitcoin Mainnet are called upon settling the balance organization (similar to Lightning) and form new UTXOs back on the Bitcoin Mainnet.
+
+Failure to do this trigger the pre-signature from either party (user, or nodes) to ensure that new ""balances"" (actually UTXOs) are reconciled back on the Bitcoin mainnet.
+
+Therefore, the system is free of censorship (from operators) and delinquency(from users). Even someone tries to use the presigns before either users or nodes try to checkout, the timelock will ensure that the attacker's effort to ""reset the balance"" are failed. 
+
+Further, Tachi's success also lies in a guarantee to anchor the state root in every consecutive block on the Bitcoin Mainnet (for every ten minutes) without fail, by working closely with Pool operators such as MARA, CS, F2, Ocean, Axe, and Stratum. ","A series of bilateral off-chain transactions leading to the latest outputs owned by senders and receivers are called batching.
+
+The final batch is broadcasted to the Bitcoin Mainnet for confirmation of state on chain.","Similar to Erk, Ark also commits a single UTXO to the Bitcoin Mainnet, which is shared by all the users whose liquidity is in that output.","All balances of the users in the latest round is represented in a single UTXO on the Bitcoin Mainnet, shared by all the users involved in the round. This is not the most convenient way to resolve states as it incurs additional cost to the users later on the mainnet to claim their funds back from the shared UTXO. This is not a good UX solution to a bad UX problem.",,,"""Exit"" from Bitlayer is possible by signing a withdrawal request.
+
+After the challenge window, your BTC will be un-pegged (burn on Bitlayer) and transferred to your wallet in 1:1 ratio on the Bitcoin Mainnet.
+
+Due to the challenge window, user may not have access to L1 liquidity on demand.","Users need to initiate a request to offload assets from a rollup back on the Bitcoin Mainnet. Upon receiving the request, Operators can process the request and withdraw assets on Bitcoin Mainnet with supporting proofs and data.",,"DAG based tracking of Nodes (UTXOs) and Edges (Txns). If the node is not anchored to Bitcoin Mainnet, it's ""Arch-only"" confirmed. DAG re-org/rollback has a high probability here and openly accepted in the paper. This is a can of worms which means there could be HUGE number of confirmation conflicts.
+
+Criticism: They claim to offer developers a ""high probability Block Inclusion"", while not guaranteeing it (obviously, they can't).
+
+",,,"""Peg-out"" transactions destroy the L-BTC you hold and transfers same amount with 1:1 peg ratio back on Bitcoin Mainnet from the federation multisig.
+
+Again, a lot of trust assumption on the federation functionaries in the event of censorship.","A closing transaction signed by both peers who operate the channel will seal the balance and form new UTXOs on Bitcoin Mainnet.
+
+In case of delinquency from the counterparty, the channel is revoked after the timelock which was initially agreed at the time of channel creation. Hence, helpful for unilateral exits."
+"Expressibility (Developer Tooling)
+Can I deploy an app, logic or smart contract off-chain?","Tachi implements SatVM, a multi-runtime paradigm, supporting Enhanced Bitcoin Script, EVM, SVM, ABCI, and Wasm. 
+
+This is made possible by inscribing state roots of each application to a single Sat at a very high frequency and committing offchain via Rounds in the Tachi Metaprotocol.
+
+Each deployment can be also called a Metalayer, further allowing for customization of validation rules, compliance and other network effects from cross-chain paradigm. 
+
+This is a much diverge approach, when compared to a singular appoach used by BitVM, implemented in Bitlayer.","Since Payjoin is focused on Private Bilateral Offchain transactions, there is runtime support except for Bitcoin Script.","Unlike Erk, Ark indeed offers SDKs to developers across multiple languages such as Go, and JavaScript to develop ""Ark Contracts"", which is basically a batch of transactions that are submitted to the round from apps integrating Ark.","Erk does not support expressibility beyond Script, as of latest research.",,,"Bitlayer implements BitVM allowing complex turing-complete logic to be deployed on the rollup with support for other runtimes including EVM.
+
+Moving a Dapp from Ethereum eco to Bitcoin might be easy due to this compatibility.","Unlike the BitVM which is designed for general-purpose usecases with 45+ opcodes, the BitSNARK VM in contrast limits the operations to only ADD, SUB, and MUL operations sufficient for proof generation and verification, delgating the logical expressibility to rollups on BitcoinOS.",,"Developers can write custom routines targeted to a 64-bit register based Virtual Machine running on the RISC instruction set. This is being named as eBPF Virtual Machine, but this is pretty normal.
+
+eBPF implementation is forked from Solana. This means, they are eternally reliant on Solana's release cycle.
+
+Section 6.1 of the Whitepaper confirms that the compiled program is stored in an executable ""account"" of the sidechain. Clearly, this does not seem to be Sat-denominated.",,,"Relies on Element Platform to support application development with preview access to OP_CAT and other cutting edge opcodes.
+
+Much better than Bitcoin Mainnet, but sub par compared to competition and the current demand.","Yes. But supports limited expressibility as Bitcoin Script is the only runtime supported.
+
+Expressibility on Lightning is a dead subject (almost)."
+"Incentives
+How are the trust operators getting paid for their services?","All nodes earn in $TACHI.
+
+$TACHI is a BRC-20 token on the Bitcoin Mainnet.
+
+Nodes earn $TACHI by:
+1. Onboarding users, replicating their VTXOs
+2. Settling transactions, aggregating proofs
+3. Deployment of apps / Metalyers
+
+Users earn $TACHI by:
+1. Staking their $TACHI tokens into $stTACHI locked over time earning native yields.
+
+Economic incentives for $TACHI is well aligned with clear supply-demand dynamics, while staying grounded to Bitcoin (BRC-20 is a token inscribed to a Sat).","Since there are no Trusted Third Parties or Trust Operators hosting anything for the users, fees are directly paid to block producer at the time of onchain reconciliation.",There is not much documentation around fee mechanism on Ark Docs. One may assume that server and clients participating in the round may share fees as a source of revenue.,"ASP, the central party server co-ordinating rounds charges fees for exchange of VTXOs off-chain.",,,"First things first, all nodes earn in BTC.
+
+Sequencers earn fee for ordering, batching & executing.
+
+Provers for validating.
+
+Challengers for valid disputes, as applicable.
+
+$BTR token is anticipated soon but unclear about its usecases.","Operators are incentivized with tokens to settle transactions offchain and support withdrawals on Bitcoin mainnet. However, the tokens design is not clearly demonstrated in the Whitepaper - so we may assume the tokens are not Bitcoin-native aka colored Sats.",,"Arch will have its own Native Token, as advertised in the Whitepaper (Sec 4.1)
+
+Users earn more tokens by staking them
+
+Since the flywheel runs on dPoS, a non-native Bitcoin sybil resistance mechanism - this may not be the best option in the community.",,,"Functionaries earn fee by settling transactions on the sidechain. This is viable given that majority of the clients are exchanges.
+
+However, there is no token game.","Collect a few Sats as fee for facilitating balance re-distribution, based on the node's reputation(number of channels managed etc).
+
+Best known for a no-token game."
+"Privacy
+How private are my transactions off-chain?","Tachi uses customized Hash Accumulation (invented by Tadge Dryja the founder of Lightning Network @ MIT) for Shadow Proofs of each transaction, adding a depth of encapsulation as UTXOs change hands. 
+
+Tachi also uses custom Bullet Proofs (created by Pieter Wuille OG Bitcoin Core Contributor @ Stanford) for proof aggregation ensuring on-chain anchor transactions facilitate the verification for involved/known parties only, thereby protecting privacy of all users involved. ","The major cornerstone of Payjoin is Privacy and this is achieved by mixing multiple inputs into multiple outputs offline thereby invalidating the ""single input owner heuristics"" used by chain analysts to track the source and ownership of funds. While this does not emply any fancy ZKP primitives, it is still bitcoin native primitives that help achieve this privacy enclave for bilateral users.","Similar to Erk, Ark also uses a VTXO tree to commit the state on the Bitcoin Mainnet.","Ark's off-chain transactions are merged into a merkle tree whose taproot output is published on the Bitcoin mainnet. Given all the other keys are known, this might not be favouring some users who do not want other known entities to be part of the same round, say an OFAC listed entity.",,,"Offchain transactions are protected by ZKP.
+
+Industry standard in ETH. No novelty. But it'll pass.","It is unlear about the position of BitcoinOS on private offchain transactions. However, given the Grail Bridge is a zkSNARK based bridge that could aggregate proofs from several rollups, there are higher chances of enabling users to perform private offline transactions.",,"They are concerned about privacy, yet using DAGs on a sidechain.
+
+We are unclear at this time how Arch aims to solve for privacy with its DAG implementation.",,,"Confidential transactions and atomic swaps are supported.
+
+Also, Private Asset Issuance and Transfers are supported.
+
+But, everything hinges on the trust assumed on functionaries.","Supports Onion Services (TOR).
+
+HTLC claims ensure that claims do not divulge any counterparty information due to cryptographic proofs.
+
+Payment channel obfuscation through multi-channel hops.
+
+True OG."
+"Maturity
+At what stage are these projects in?",Protocol Specification on Signet,Merchants using BTC Pay Server can accept Payjoin transactions as we speak.,Signet / Regtest (August 2024),Signet (March 2025),Live on Mainnet since August 2024,Live on Mainnet since February 2024,"Live on Mainnet since April 2024
+
+
+3,937.X BTC ",Protocol Specifications integrated to Regtest,Live on Mainnet since March 2024,Incentivized Testnet since October 2024,Live on Mainnet since January 2021,Live on Mainnet since January 2018,"Live on Mainnet since October 2018
+
+3891.X (L)BTC
+
+36.X USDt (in M)","Live on Mainnet since December 2017
+
+4268 BTC TVL"
+"Backers
+Who are invested in the success of the project?",[SEED ROUND IN PROGRESS],Arthur Hayes / Maelstrom / BitMEX Research,"Axiom BTC Capital
+Draper Associates
+Fulgur Ventures",?,"Paradigm
+Polychain Capital 
+Bullish Capital 
+Hack VC 
+Framework Ventures 
+Polygon Ventures 
+Castle Island Ventures 
+OKX Ventures 
+IDG 
+DHVC 
+Breyer Capital 
+Symbolic Capital","Spartan Group (Co-lead) 
+Hailstone Labs (Co-lead) 
+Amber Group 
+Presto Labs 
+IOBC Ventures 
+Sequoia Capital 
+IDG Capital 
+BAI Capital (Bertelsmann) 
+5Y Capital 
+Vitalbridge Capital 
+OKX Ventures 
+ABCDE 
+Foresight Ventures 
+ArkStream Capital 
+viaBTC (mining pool) 
+MH Ventures 
+KuCoin Ventures 
+Waterdrip Capital 
+Inception Capital","DOMO (creator of BRC-20) 
+Brian Kang (co-founder of FactBlock) 
+Franklin Templeton 
+ABCDE Capital 
+Stake Capital Group 
+WAGMI Ventures 
+Skyland Ventures 
+Flow Traders 
+GSR Ventures 
+FalconX 
+Metalpha 
+280 Capital 
+Presto Labs 
+Caladan 
+Framework Ventures 
+Polychain Capital 
+SCB Limited 
+Selini Capital 
+G-20 Group",Unknown,"Portal Ventures
+
+Draper Goren Blockchain
+
+Sats Ventures","Multicoin Capital 
+OKX
+UTXO
+Newman Capital
+ABCDE
+Portal Ventures
+Big Brain Holdings
+CMS Holdings
+Tangent Ventures","Union Square Ventures (USV) 
+SNZ Holding 
+HashKey Capital 
+Blockchain Capital 
+Digital Currency Group (DCG) 
+Naval Ravikant (Angel Investor) 
+SV Angel 
+IOSG Ventures 
+Winklevoss Capital 
+Fundamental Labs 
+Fenbushi Capital 
+Spartan Group 
+Tembusu Partners","Digital Currency Group (DCG) 
+Coinsilium Group (Lead investor) 
+Bitmain 
+BitFury Capital 
+DFG (Digital Finance Group) 
+Anthony Di Iorio (Angel Investor)","Coinbase Ventures
+IOSG Ventures 
+ULS Group Lead 
+IDG Capital 
+8 Decimal Capital 
+B Dash Ventures
+ICONIZ 
+FTX Ventures","Valor Equity Partners 
+Baillie Gifford 
+Vlad Tenev 
+Goldcrest Capital 
+Digital Currency Group (DCG) 
+Slow Ventures 
+Brevan Howard Digital 
+Kingsway Capital 
+Craft Ventures (Lead investor) 
+M13 
+NYDIG 
+Stillmark
+Hivemind Ventures (lead) 
+Republic 
+Cavalry 
+Ride Wave 
+Studio 
+Iterative 
+Fulgur Ventures 
+Bill Crowley (angel investor) 
+Lisa Shields (angel investor)"

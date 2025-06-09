@@ -1,0 +1,39 @@
+# Core LangChain packages with compatible versions
+langchain==0.0.348
+langchain-core==0.1.8
+langchain-community==0.0.13
+langchain-openai==0.1.7
+# langchain-groq==0.1.5
+
+# Web framework
+streamlit==1.32.0
+fastapi==0.110.2
+uvicorn==0.29.0
+sse-starlette==1.8.2
+
+# Document processing
+python-dotenv==1.0.1
+beautifulsoup4==4.12.2
+pypdf==4.2.0
+
+# Vector databases and embeddings
+faiss-cpu==1.7.4
+chromadb==0.4.24
+sentence-transformers==2.7.0
+
+# External APIs and tools
+# groq==0.8.0
+wikipedia==1.4.0
+arxiv==2.1.0
+lxml==5.4.0
+
+# Optional packages (install separately if needed)
+# langserve==0.2.1
+# cassio==0.1.6
+# langchainhub==0.1.15
+# langchain-objectbox==0.0.2
+
+# Added from the code block
+langchain-ollama==0.0.2
+requests==2.31.0
+pandas==2.1.4
