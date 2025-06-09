@@ -320,9 +320,7 @@ class BitcoinL2RAG:
             align-items: center;
             justify-content: center;
             letter-spacing: 1px;
-            background: linear-gradient(to right, #0f1221, #1d2744);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #000000;
             text-shadow: 0px 1px 2px rgba(255,255,255,0.3);
         }
         
@@ -528,15 +526,15 @@ class BitcoinL2RAG:
                     is_latest_response = (i + 1 == len(messages) - 1)
                     
                     # Only show thinking process for previous responses (not the latest one)
-                    # Latest one will be shown separately below the chat history using display_results
+                    # Latest one will be shown separately below the chat history
                     thinking_key = f"thinking_{message_index}"
                     if not is_latest_response and thinking_key in st.session_state and st.session_state[thinking_key]:
                         with st.expander("🧠 Reasoning", expanded=False):
-                            html_thinking = st.session_state[thinking_key].replace("\n", "<br>")
                             st.markdown(f"""
                             <div class="thinking-process-container">
-                                <h4>DeepSeek R1 Thinking Process</h4>
-                                {html_thinking}
+                                <div class="thinking-box">
+                                    {st.session_state[thinking_key]}
+                                </div>
                             </div>
                             """, unsafe_allow_html=True)
                     
@@ -580,9 +578,19 @@ class BitcoinL2RAG:
         if hasattr(st.session_state, 'response_data') and st.session_state.response_data:
             data = st.session_state.response_data
             
-            # Use the UI component to display reasoning and citations
-            results_placeholder = st.empty()
-            self.ui.display_results(data, results_placeholder, self.text_processor)
+            # ALWAYS show thinking process for the current response
+            if data['thinking']:
+                with st.expander("🧠 Reasoning", expanded=False):
+                    st.markdown(f"""
+                    <div class="thinking-process-container">
+                        <div class="thinking-box">
+                            {data['thinking']}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+            
+            # Display citations directly without the container box
+            self.ui.display_citations(data)
             
             # Store thinking and context in session state for history
             if "chat_history" in st.session_state and hasattr(st.session_state.chat_history, "messages"):

@@ -797,7 +797,7 @@ class UIComponents:
             
             # Show thinking process in collapsible section
             if data.get('thinking'):
-                with st.expander("🧠 Reasoning", expanded=False):
+                with st.expander("🧠 AI Reasoning Process (Click to expand)", expanded=False):
                     html_thinking = data['thinking'].replace("\n", "<br>")
                     st.markdown(f"""
                     <div class="thinking-process-container">
@@ -833,6 +833,9 @@ class UIComponents:
                 {response_html}
             </div>
             """, unsafe_allow_html=True)
+            
+            # Create copy button with Streamlit native functionality instead of JavaScript
+            self.create_copy_button(data['answer'], response_id)
             
             # Generation info 
             st.markdown(f"""
